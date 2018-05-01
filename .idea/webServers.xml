@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="ssh://spicti@47.96.85.203:22/home/spicti/.virtualenvs/py3env/bin/python3.5" name="ssh://spicti@47.96.85.203:22/home/spicti/.virtualenvs/py3env/bin/python3.5">
+      <webServer id="ssh://spicti@47.96.85.203:22/home/spicti/.virtualenvs/py3env/bin/python3.5" name="shiguang">
         <fileTransfer host="47.96.85.203" port="22" accessType="SFTP">
           <option name="port" value="22" />
         </fileTransfer>

@@ -1,3 +1,4 @@
+# coding:utf-8
 """
 Django settings for shiguang project.
 
@@ -11,10 +12,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# 添加下面这句话，使项目可以在Linux里面运行
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -25,7 +29,7 @@ SECRET_KEY = 'z^!6ih8cis83@3p#6615wrd$9(lsnplbe&lz66xn64=!k9p=an'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'course',
 ]
 
 MIDDLEWARE = [
@@ -74,16 +80,34 @@ WSGI_APPLICATION = 'shiguang.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST':'www.nanfang365.cn',
+        'PORT':'3306',
+        'USER':'nanfang',
+        'PASSWORD':'123456',
+        'NAME': 'shiguangdb',
     }
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+
+#重载用户模块
+AUTH_USER_MODEL = 'users.UserInfo'
+
+
+#重载AUTHENTICATION_BACKENDS模块
+AUTHENTICATION_BACKENDS = ('users.views.CustomBackend',)
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,18 +128,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#下面这句话是上课讲的
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+
+# 下面这句话是网上查到的，可以将各个APP下面的资源都收集起来
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
